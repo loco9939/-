@@ -1,41 +1,39 @@
-let id_list = ["muzi", "frodo", "apeach", "neo"];
-let report = [
-  "muzi frodo",
-  "apeach frodo",
-  "frodo neo",
-  "muzi neo",
-  "apeach muzi",
-];
-let k = 2;
+let id_list = ["con", "ryan"];
+let report = ["ryan con", "ryan con", "ryan con", "ryan con"];
+let k = 3;
 
 function solution(id_list, report, k) {
   let answer = [];
+  let reports = new Set(report);
 
   // report 요소를 신고당한 사람을 따로 구분하여 객체에 담는다.
   let reported = {}; // 신고당한그룹
   let reportedBy = {}; // 신고한 그룹
-  let mailCount = [];
-  report.forEach((element) => {
-    let report_arr = element.split(" ");
-    if (reported[report_arr[1]] === undefined) {
-      reported[report_arr[1]] = 1;
-    } else {
-      reported[report_arr[1]] += 1;
+  let mailCount = {}; // 메일 갯수
+
+  id_list.forEach((element) => {
+    reported[element] = 0;
+    reportedBy[element] = [];
+    mailCount[element] = 0;
+  });
+
+  reports.forEach((element) => {
+    let splitted = element.split(" ");
+    reported[splitted[1]] += 1;
+    reportedBy[splitted[1]].push(splitted[0]);
+  });
+
+  for (const el in reported) {
+    if (reported[el] >= k) {
+      for (const i of reportedBy[el]) {
+        mailCount[i] += 1;
+      }
     }
-    reportedBy[report_arr[1]] = [];
-  });
-
-  report.forEach((element) => {
-    let report_arr = element.split(" ");
-    reportedBy[report_arr[1]].push(reportedBy[report_arr[0]]);
-  });
-
-  console.log(reported);
-  console.log(reportedBy);
-
+  }
+  for (const el in mailCount) {
+    answer.push(mailCount[el]);
+  }
   return answer;
 }
 
 solution(id_list, report, k);
-
-// result = [2,1,1,0];
