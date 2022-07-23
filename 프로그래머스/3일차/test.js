@@ -1,6 +1,5 @@
-const targetStr = 'Is this all there is?';
+let a = [1,2,3,4,5,5,6,6,7];
 
-// 문자열 is를 대소문자를 구별하여 한번만 검색한다.
-let regexr = /is/;
+let answer = new Set(a);
 
-console.log(targetStr.match(regexr))
+console.log([...answer])

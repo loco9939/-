@@ -1,4 +1,4 @@
-let stocks = [150, 80, 60, 50, 30];
+let stocks = [150, 80, 90, 30, 60];
 
 function getMaxProfit(arr) {
   let answer = 0;
@@ -28,4 +28,19 @@ function solution(arr) {
   }
   return maxProfit;
 }
-console.log(solution(stocks));
+// console.log(solution(stocks));
+
+function maxProfit(prices) {
+	let maxProfit = 0;
+	let minBuyPrice = prices[0];
+
+	for (let price of prices) {
+		if (minBuyPrice < price) {
+			maxProfit = Math.max(maxProfit, price - minBuyPrice);
+		} else {
+			minBuyPrice = price
+		}
+	}
+	return maxProfit
+}
+console.log(maxProfit(stocks))
