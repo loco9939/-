@@ -1,34 +1,30 @@
-let input = [
-  // TC1
-  [5, [1, 2], [2, 3]],
-  [5, [2, 3], [1, 2]],
-  [5, [4, 2], [3, 5]],
-  [5, [2, 3, 4], [1, 2, 3]],
-];
-
 function solution(n, lost, reserve) {
-  let answer = 0;
-  for (let i = 0; i < lost.length; i++) {
-    for (let j = 0; j < reserve.length; j++) {
-      if (lost[i] === reserve[j]) {
-        lost.splice(i, 1);
-        reserve.splice(j, 1);
-      }
-    }
-  }
-  answer = n - lost.length;
+  var answer = 0;
+  // 1. 배열을 사용하기 쉽게 하기 위해 정렬
+  lost.sort();
+  reserve.sort();
 
+  // 2. lost와 reserve 중복 요소있으면 lost 배열에서 제거
   for (let i = 0; i < lost.length; i++) {
-    if (reserve.indexOf(lost[i] - 1) != -1) {
-      answer += 1;
-      reserve.splice(reserve.indexOf(lost[i] - 1), 1);
-    } else if (reserve.indexOf(lost[i] + 1) != -1) {
-      answer += 1;
-      reserve.splice(reserve.indexOf(lost[i] + 1), 1);
+    let element = lost[i];
+    if (reserve.includes(element)) {
+      reserve.splice(reserve.indexOf(lost[i]), 1);
+      lost.splice(i, 1);
     }
   }
+
+  // 3. lost 요소보다 -1인 요소 reserve에 있으면 lost에서 요소 제거 그리고 +1 인 요소 reserve에 있으면 lost에서 요소 제거
+  for (let i = 0; i < lost.length; i++) {
+    let element = lost[i];
+    if (reserve.includes(element - 1)) {
+      reserve.splice(reserve.indexOf(element - 1), 1);
+      answer ++;
+    } else if (reserve.includes(element + 1)) {
+      reserve.splice(reserve.indexOf(element + 1), 1);
+      answer ++
+    }
+  }
+  answer += n - lost.length;
   return answer;
 }
-for (let i = 0; i < input.length; i++) {
-  console.log(solution(input[i][0], input[i][1], input[i][2]));
-}
+console.log(solution(5, [4, 3], [1, 3, 5]));
