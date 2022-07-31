@@ -44,13 +44,14 @@ function solution(ini, trans) {
       delete trans_arr[index];
     }
   });
-  return "YES"
+  
+  // return "YES"
   ini_arr = ini_arr.filter((el) => el !== undefined);
   trans_arr = trans_arr.filter((el) => el !== undefined);
-
+  
   ini = ini_arr.join("");
   trans = trans_arr.join("");
-  
+  console.log(ini, trans)
   
 
   return answer;
